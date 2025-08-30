@@ -1,0 +1,118 @@
+main {
+  background-color: rgb(49, 49, 49);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-window {
+  height: 95%;
+  background-color: rgb(77, 76, 76);
+  width: 70vw;
+  border-radius: 10px;
+}
+
+.chat {
+  height: 90%;
+  padding: 10px;
+  overflow-y: auto; 
+  scrollbar-width: thin;
+  scrollbar-color: #888 #4d4c4c; 
+}
+
+/* Для Chrome, Edge, Safari */
+.chat::-webkit-scrollbar {
+  width: 8px;
+  background: #4d4c4c;
+}
+
+.chat::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.msg-user, .msg-ai {
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  color: rgb(221, 220, 220);
+}
+
+.msg-user {
+  background-color: rgb(100, 100, 100);
+  align-items: flex-end;
+  max-width: 40%;
+  display: inline-block;
+  float: right;
+  clear: both;
+}
+
+.msg-ai {
+  background-color: rgb(120, 120, 120);
+  align-items: flex-start;
+  max-width: 40%;
+  display: inline-block;
+  float: left;
+  clear: both;
+}
+
+.input-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-area input, button {
+  margin-right: 30px;
+}
+
+.input-area input {
+  width: 40%;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.input-area button {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 50%;
+  padding: 5px 10px;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-area button:hover {
+  background-color: rgb(100, 100, 100);
+}
+
+.selected-file {
+  background-color: rgb(100, 100, 100);
+  color: rgb(221, 220, 220);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+
+.dots-throbber {
+  font-style: italic;
+  color: #ccc;
+  font-size: 1.1em;
+  letter-spacing: 2px;
+  animation: fadeIn 0.5s;
+  min-width: 25px;
+  display: inline-block;
+  text-align: left;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
