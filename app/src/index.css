@@ -19,3 +19,8 @@ main {
 button {
   border: none;
 }
+
+ul {
+  list-style: none;
+  padding: 0;
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FiMenu, FiX } from 'react-icons/fi';
 import './App.css';
 import { FiPaperclip } from 'react-icons/fi';
 import { IoMdSend } from 'react-icons/io';
@@ -20,29 +21,36 @@ function App() {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [waitingAnswer, setWaitingAnswer] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [files, setFiles] = useState([]);
 
   useEffect(() => {
-    async function checkStatus() {
-      try {
-        const res = await fetch('http://localhost:5000/status');
-        const data = await res.json();
-        if (data.db_filled && data.filename) {
-          setMessages([
-            { text: `Hi! Please ask any question about ${data.filename}`, sender: 'ai' }
-          ]);
-        } else {
-          setMessages([
-            { text: 'Hi! Please send me a file.', sender: 'ai' }
-          ]);
-        }
-      } catch {
-        setMessages([
-          { text: 'Hi! Please send me a file.', sender: 'ai' }
-        ]);
-      }
-    }
-    checkStatus();
+    setMessages([
+      { text: 'Hi! Please send me a file.', sender: 'ai' }
+    ]);
   }, []);
+
+  const fetchFiles = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/status');
+      const data = await res.json();
+      setFiles(data.files || []);
+    } catch {}
+  };
+
+  const handleDeleteFile = async (filename) => {
+    try {
+      await fetch('http://localhost:5000/delete_file', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename })
+      });
+      setFiles(prev => prev.filter(f => f !== filename));
+      setMessages(prev => [...prev, { text: `File ${filename} deleted.`, sender: 'ai' }]);
+    } catch {
+      setMessages(prev => [...prev, { text: `Error: Could not delete file ${filename}.`, sender: 'ai' }]);
+    }
+  };
 
   const handleSend = async () => {
     if (input.trim()) {
@@ -107,6 +115,27 @@ function App() {
     }
   };
 
+  const FileListModal = ({ open, files, onClose, onDelete }) => {
+    if (!open) return null;
+    return (
+      <div className="modal-overlay" onClick={onClose}>
+        <div className="modal-window" onClick={e => e.stopPropagation()}>
+          <div className="modal-header">
+            <span>Files</span>
+          </div>
+          <ul className="file-list">
+            {files.map((file, idx) => (
+              <li key={file} className="file-list-item">
+                <span className="file-name">{file}</span>
+                <span className="file-delete" onClick={() => onDelete(file)} title="Delete"><FiX /></span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <main>
       <div className='chat-window'>
@@ -122,7 +151,27 @@ function App() {
             </div>
           )}
         </div>
-        <div className="input-area">
+        <div className="input-area" style={{ position: 'relative' }}>
+          <button
+            className="burger-btn"
+            style={{ position: 'relative', zIndex: 2 }}
+            onClick={() => {
+              if (!modalOpen) fetchFiles();
+              setModalOpen(prev => !prev);
+            }}
+          >
+            <FiMenu size={28} />
+          </button>
+          {modalOpen && (
+            <div style={{ position: 'absolute', bottom: '48px', left: 0, width: '100%', zIndex: 10 }}>
+              <FileListModal
+                open={true}
+                files={files}
+                onClose={() => setModalOpen(false)}
+                onDelete={handleDeleteFile}
+              />
+            </div>
+          )}
           <input
             value={input}
             onChange={e => setInput(e.target.value)}

@@ -1,7 +1,7 @@
+
 # simple-rag-chat-bot
 
 ## Project Setup Instructions
-
 
 Follow these steps to set up and run the project:
 
@@ -21,7 +21,7 @@ Follow these steps to set up and run the project:
 	```
 
 3. **Update your project configuration**  
-	Edit `rag/config.py` and set your database connection details:
+	Edit `backend/config.py` and set your database connection details:
 	```python
 	DB_HOST = 'localhost'
 	DB_PORT = 5432
@@ -66,6 +66,34 @@ Follow these steps to set up and run the project:
 
 6. **Access the application**  
 	Open your browser and go to [http://localhost:5000](http://localhost:5000) to use the chat bot.
+
+---
+
+## Features
+
+- **Multi-file support:** You can upload multiple files. Each file is stored separately and indexed in its own database table.
+- **File management:** Use the burger menu in the chat input to view and delete files. Deleting a file also removes its data from the database.
+- **Contextual search:** Ask questions about a specific file by mentioning its name in your message. The bot will automatically search in the relevant file's data.
+
+---
+
+## Example: Asking the AI about a file
+
+Suppose you uploaded a file named `alice_in_wonderland.md`. You can ask:
+
+```
+Who is the main character in alice_in_wonderland?
+```
+
+Or for another file:
+
+```
+What is the topic of test_1?
+```
+
+The bot will automatically search in the mentioned file.
+
+---
 
 **Note:**
 - Make sure you have Python and Node.js installed on your system.

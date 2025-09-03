@@ -11,6 +11,7 @@ app/coverage
     .coverage   
 # production
 app/build
+app/public
 
 # misc
 app/.DS_Store
@@ -24,3 +25,4 @@ app/yarn-debug.log*
 app/yarn-error.log*
 
 backend/venv
+backend/data
