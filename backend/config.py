@@ -2,9 +2,9 @@ from ollama import Client
 
 DB_HOST = 'localhost'
 DB_PORT = 5432
-DB_NAME = 'rag'
+DB_NAME = 'your_database'
 DB_USER = 'postgres'
-DB_PASSWORD = '2006vkuz'
+DB_PASSWORD = 'your_password'
 
 DATA_DIR = 'data'
 
