@@ -25,9 +25,9 @@ Follow these steps to set up and run the project:
 	```python
 	DB_HOST = 'localhost'
 	DB_PORT = 5432
-	DB_NAME = 'ragdb'
-	DB_USER = 'raguser'
-	DB_PASSWORD = 'yourpassword'
+	DB_NAME = 'your_database'
+	DB_USER = 'postgres'
+	DB_PASSWORD = 'your_password'
 	```
 
 ---
